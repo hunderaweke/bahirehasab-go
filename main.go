@@ -10,5 +10,5 @@ func main() {
 	bh := bahirehasab.BahireHasab{
 		Year: 2016,
 	}
-	fmt.Println(bh.Tnsae())
+	fmt.Println(bh.Neneweh())
 }

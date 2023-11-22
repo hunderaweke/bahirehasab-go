@@ -102,7 +102,7 @@ func (bh *BahireHasab) BealeMetk() string {
 }
 func (bh *BahireHasab) EletKen(e string) string {
 	elet := strings.Split(e, " ")
-	atsfeWer := (slices.Index(WERAT, elet[0])) * 2
+	atsfeWer := (slices.Index(WERAT, elet[0]) + 1) * 2
 	tnteYon := (bh.MeteneRabiet()+bh.Year+5500)%7 - 1
 	kenStr := elet[len(elet)-1]
 	ken, err := strconv.Atoi(kenStr)
@@ -134,8 +134,6 @@ func (bh *BahireHasab) Neneweh() string {
 	} else if bh.Metk() == 30 || bh.Metk() == 0 {
 		_wer = "የካቲት"
 	} else if _l[0] == "መስከረም" {
-		_wer = "የካቲት"
-	} else if _l[0] == "ጥቀምት" {
 		_wer = "ጥር"
 	} else {
 		_wer = "የካቲት"
