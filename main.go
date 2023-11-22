@@ -8,7 +8,7 @@ import (
 
 func main() {
 	bh := bahirehasab.BahireHasab{
-		Year: 2006,
+		Year: 2016,
 	}
-	fmt.Println(bh.Abekte())
+	fmt.Println(bh.Tnsae())
 }
