@@ -8,7 +8,8 @@ import (
 
 func main() {
 	bh := bahirehasab.BahireHasab{
-		Year: 2009,
+		Year: 2006,
 	}
-	fmt.Println(bh.Wenber())
+	fmt.Println(bh.Abekte())
 }
+
