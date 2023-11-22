@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/hunderaweke/bahirehasabgo/bahirehasab"
+	"github.com/hunderaweke/bahirehasab-go/bahirehasab"
 )
 
 func main() {
@@ -12,4 +12,3 @@ func main() {
 	}
 	fmt.Println(bh.Abekte())
 }
-

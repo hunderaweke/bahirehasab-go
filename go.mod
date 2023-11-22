@@ -1,3 +1,3 @@
-module github.com/hunderaweke/bahirehasabgo
+module github.com/hunderaweke/bahirehasab-go
 
 go 1.21.4

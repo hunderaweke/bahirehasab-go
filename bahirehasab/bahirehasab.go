@@ -1,5 +1,7 @@
 package bahirehasab
 
+import "strconv"
+
 type BahireHasab struct {
 	Year int
 }
@@ -10,39 +12,13 @@ const (
 )
 
 var (
-	WERAT = []string{
-		"መስከረም",
-		"ጥቅምት",
-		"ኅዳር",
-		"ታኅሣስ",
-		"ጥር",
-		"የካቲት",
-		"መጋቢት",
-		"ሚያዝያ",
-		"ግንቦት",
-		"ሰኔ",
-		"ሐምሌ",
-		"ነሐሴ",
-		"ጷግሜ",
-	}
+	WERAT         = []string{"መስከረም", "ጥቅምት", "ኅዳር", "ታኅሣስ", "ጥር", "የካቲት", "መጋቢት", "ሚያዝያ", "ግንቦት", "ሰኔ", "ሐምሌ", "ነሐሴ", "ጷግሜ"}
 	WENGELAWI     = []string{"ዮሐንስ", "ማቴዎስ", "ማርቆስ", "ሉቃስ"}
 	ELETAT        = []string{"ቅዳሜ", "እሑድ", "ሰኞ", "ማክሰኞ", "ረቡዕ", "ሐሙስ", "አርብ"}
 	BEALAT_TEWSAK = []int{0, 14, 41, 62, 67, 69, 93, 108, 118, 119, 121}
-	BEALAT        = []string{
-		"ጾመ ነነዌ",
-		"ዐብይ ጾም",
-		"ደብረ ዘይት",
-		"ሆሳዕና",
-		"ስቅለት",
-		"ትንሳኤ",
-		"ርክበ ካሕናት",
-		"ዕርገት",
-		"በዓለ ሀምሳ",
-		"ጾመ ሐዋርያት",
-		"ጾመ ድኅነት",
-	}
-	ELETE_KEN   = []string{"ረቡዕ", "ሐሙስ", "አርብ", "ቅዳሜ", "እሑድ", "ሰኞ", "ማክሰኞ"}
-	ELET_TEWSAK = map[string]int{"ሰኞ": 6, "ማክሰኞ": 5, "ረቡዕ": 4, "ሐሙስ": 3, "አርብ": 2, "ቅዳሜ": 8, "እሑድ": 7}
+	BEALAT        = []string{"ጾመ ነነዌ", "ዐብይ ጾም", "ደብረ ዘይት", "ሆሳዕና", "ስቅለት", "ትንሳኤ", "ርክበ ካሕናት", "ዕርገት", "በዓለ ሀምሳ", "ጾመ ሐዋርያት", "ጾመ ድኅነት"}
+	ELETE_KEN     = []string{"ረቡዕ", "ሐሙስ", "አርብ", "ቅዳሜ", "እሑድ", "ሰኞ", "ማክሰኞ"}
+	ELET_TEWSAK   = map[string]int{"ሰኞ": 6, "ማክሰኞ": 5, "ረቡዕ": 4, "ሐሙስ": 3, "አርብ": 2, "ቅዳሜ": 8, "እሑድ": 7}
 )
 
 func (bh *BahireHasab) Medeb() int {
@@ -71,4 +47,20 @@ func (bh *BahireHasab) Metk() int {
 	} else {
 		return 30
 	}
+}
+
+func (bh *BahireHasab) Wengelawi() string {
+	return WENGELAWI[(bh.Year+5500)%4]
+}
+func (bh *BahireHasab) MeteneRabiet() int {
+	return int((bh.Year + 5500) / 4)
+}
+func (bh *BahireHasab) BealeMetk() string {
+	var bealeMetk string
+	if 15 <= bh.Metk() && bh.Metk() <= 30 {
+		bealeMetk = "መስከረም" + strconv.Itoa(bh.Metk())
+	} else if 2 <= bh.Metk() && bh.Metk() <= 14 {
+		bealeMetk = "ጥቀምት" + strconv.Itoa(bh.Metk())
+	}
+	return bealeMetk
 }
