@@ -164,11 +164,11 @@ func (bh *BahireHasab) Neneweh() string {
 	return _wer + " " + strconv.Itoa(_mebajaHamer)
 }
 
-func (bh *BahireHasab) atswamatWebealat(beal string) string {
+func (bh *BahireHasab) atswamatWebealat(beal string) (string, string) {
 	bh.Logger.Printf("entering AtswamatWebealat with: %v\n", beal)
 	_bealTewsak := BEALAT_TEWSAK[slices.Index(BEALAT, beal)]
 	if _bealTewsak == 0 {
-		return bh.Neneweh()
+		return bh.Neneweh(), beal
 	}
 	_neneweh := strings.Split(bh.Neneweh(), " ")
 	_nenewehWer, _nenewehKenStr := _neneweh[0], _neneweh[1]
@@ -188,38 +188,38 @@ func (bh *BahireHasab) atswamatWebealat(beal string) string {
 	} else {
 		_bealeKen = 30
 	}
-	return _bealeWer + " " + strconv.Itoa(_bealeKen)
+	return beal, (_bealeWer + " " + strconv.Itoa(_bealeKen))
 }
 
-func (bh *BahireHasab) AbiyTsom() string {
+func (bh *BahireHasab) AbiyTsom() (string, string) {
 	return bh.atswamatWebealat(BEALAT[1])
 }
-func (bh *BahireHasab) DebreZeyt() string {
+func (bh *BahireHasab) DebreZeyt() (string, string) {
 	return bh.atswamatWebealat(BEALAT[2])
 }
-func (bh *BahireHasab) Hosaena() string {
+func (bh *BahireHasab) Hosaena() (string, string) {
 	return bh.atswamatWebealat(BEALAT[3])
 }
-func (bh *BahireHasab) Seklet() string {
+func (bh *BahireHasab) Seklet() (string, string) {
 	return bh.atswamatWebealat(BEALAT[4])
 }
-func (bh *BahireHasab) Tnsae() string {
+func (bh *BahireHasab) Tnsae() (string, string) {
 	return bh.atswamatWebealat(BEALAT[5])
 }
-func (bh *BahireHasab) RkbeKahnat() string {
+func (bh *BahireHasab) RkbeKahnat() (string, string) {
 	return bh.atswamatWebealat(BEALAT[6])
 }
-func (bh *BahireHasab) Erget() string {
+func (bh *BahireHasab) Erget() (string, string) {
 	return bh.atswamatWebealat(BEALAT[7])
 }
-func (bh *BahireHasab) BealeHamsa() string {
+func (bh *BahireHasab) BealeHamsa() (string, string) {
 	return bh.atswamatWebealat(BEALAT[8])
 }
 
-func (bh *BahireHasab) TsomeHawaryat() string {
+func (bh *BahireHasab) TsomeHawaryat() (string, string) {
 	return bh.atswamatWebealat(BEALAT[9])
 }
 
-func (bh *BahireHasab) TsomeDihnet() string {
+func (bh *BahireHasab) TsomeDihnet() (string, string) {
 	return bh.atswamatWebealat(BEALAT[10])
 }

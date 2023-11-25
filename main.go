@@ -1,16 +1,21 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
+	"time"
 
-	"github.com/hunderaweke/bahirehasab-go/bahirehasab"
+	bh "github.com/hunderaweke/bahirehasab-go/bahirehasab"
 )
 
 func main() {
-	bh := bahirehasab.BahireHasab{
-		Year:   2015,
+	year := flag.Int("year", time.Now().Year()-8, "the year for calculations")
+	// logger := flag.Int("log", log.New(), "the log level for debugging")
+	bh := bh.BahireHasab{
+		Year:   *year,
 		Logger: *log.Default(),
 	}
-	fmt.Println(bh.Neneweh())
+	beal, date := bh.AbiyTsom()
+	fmt.Println(beal + " : " + date)
 }
