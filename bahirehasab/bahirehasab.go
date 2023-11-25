@@ -137,7 +137,7 @@ func (bh *BahireHasab) NewYear() string {
 
 }
 
-func (bh *BahireHasab) MebajaHamer() int {
+func (bh *BahireHasab) mebajaHamer() int {
 	eletKen := bh.EletKen(bh.bealeMetk())
 	_mebajaHamer := bh.metk() + ELET_TEWSAK[eletKen]
 	bh.Logger.Printf("getting eletken: %v\n", eletKen)
@@ -149,7 +149,7 @@ func (bh *BahireHasab) MebajaHamer() int {
 func (bh *BahireHasab) Neneweh() string {
 	_bealeMetk := bh.bealeMetk()
 	_l := strings.Split(_bealeMetk, " ")
-	_mebajaHamer := bh.MebajaHamer()
+	_mebajaHamer := bh.mebajaHamer()
 	var _wer string
 	if _mebajaHamer > 30 {
 		_wer = "የካቲት"
@@ -164,7 +164,8 @@ func (bh *BahireHasab) Neneweh() string {
 	return _wer + " " + strconv.Itoa(_mebajaHamer)
 }
 
-func (bh *BahireHasab) AtswamatWebealat(beal string) string {
+func (bh *BahireHasab) atswamatWebealat(beal string) string {
+	bh.Logger.Printf("entering AtswamatWebealat with: %v\n", beal)
 	_bealTewsak := BEALAT_TEWSAK[slices.Index(BEALAT, beal)]
 	if _bealTewsak == 0 {
 		return bh.Neneweh()
@@ -191,34 +192,34 @@ func (bh *BahireHasab) AtswamatWebealat(beal string) string {
 }
 
 func (bh *BahireHasab) AbiyTsom() string {
-	return bh.AtswamatWebealat(BEALAT[1])
+	return bh.atswamatWebealat(BEALAT[1])
 }
 func (bh *BahireHasab) DebreZeyt() string {
-	return bh.AtswamatWebealat(BEALAT[2])
+	return bh.atswamatWebealat(BEALAT[2])
 }
 func (bh *BahireHasab) Hosaena() string {
-	return bh.AtswamatWebealat(BEALAT[3])
+	return bh.atswamatWebealat(BEALAT[3])
 }
 func (bh *BahireHasab) Seklet() string {
-	return bh.AtswamatWebealat(BEALAT[4])
+	return bh.atswamatWebealat(BEALAT[4])
 }
 func (bh *BahireHasab) Tnsae() string {
-	return bh.AtswamatWebealat(BEALAT[5])
+	return bh.atswamatWebealat(BEALAT[5])
 }
 func (bh *BahireHasab) RkbeKahnat() string {
-	return bh.AtswamatWebealat(BEALAT[6])
+	return bh.atswamatWebealat(BEALAT[6])
 }
 func (bh *BahireHasab) Erget() string {
-	return bh.AtswamatWebealat(BEALAT[7])
+	return bh.atswamatWebealat(BEALAT[7])
 }
 func (bh *BahireHasab) BealeHamsa() string {
-	return bh.AtswamatWebealat(BEALAT[8])
+	return bh.atswamatWebealat(BEALAT[8])
 }
 
 func (bh *BahireHasab) TsomeHawaryat() string {
-	return bh.AtswamatWebealat(BEALAT[9])
+	return bh.atswamatWebealat(BEALAT[9])
 }
 
 func (bh *BahireHasab) TsomeDihnet() string {
-	return bh.AtswamatWebealat(BEALAT[10])
+	return bh.atswamatWebealat(BEALAT[10])
 }
