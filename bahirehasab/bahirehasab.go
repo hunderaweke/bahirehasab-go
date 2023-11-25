@@ -1,13 +1,15 @@
 package bahirehasab
 
 import (
+	"log"
 	"slices"
 	"strconv"
 	"strings"
 )
 
 type BahireHasab struct {
-	Year int
+	Year   int
+	Logger log.Logger
 }
 
 const (
@@ -65,73 +67,94 @@ func (bh *BahireHasab) Medeb() int {
 	}
 }
 
-func (bh *BahireHasab) Wenber() int {
-	return bh.Medeb() - 1
-}
-func (bh *BahireHasab) Abekte() int {
-	if bh.Wenber()*TINTEABEKTE > 0 {
-		return bh.Wenber() * TINTEABEKTE % 30
-	} else {
-		return 30
+func (bh *BahireHasab) wenber() int {
+	_wenber := bh.Medeb() - 1
+	bh.Logger.Printf("wenber Returned: %v\n", _wenber)
+	if _wenber == 0 {
+		return 18
 	}
+	return _wenber
+}
+func (bh *BahireHasab) abekte() int {
+	var _abekte int
+	if bh.wenber()*TINTEABEKTE > 0 {
+		_abekte = (bh.wenber() * TINTEABEKTE) % 30
+	} else {
+		_abekte = 30
+	}
+	bh.Logger.Printf("abekte returned: %v\n", _abekte)
+	return _abekte
 }
 
-func (bh *BahireHasab) Metk() int {
-	if bh.Wenber()*TINTEMETK > 0 {
-		return bh.Wenber() * TINTEMETK % 30
+func (bh *BahireHasab) metk() int {
+	var _metk int
+	if bh.wenber()*TINTEMETK != 0 {
+		_metk = (bh.wenber() * TINTEMETK) % 30
 	} else {
-		return 30
+		_metk = 30
 	}
+	bh.Logger.Printf("metk returned: %v\n", _metk)
+	return _metk
 }
 
 func (bh *BahireHasab) Wengelawi() string {
 	return WENGELAWI[(bh.Year+5500)%4]
 }
-func (bh *BahireHasab) MeteneRabiet() int {
+func (bh *BahireHasab) meteneRabiet() int {
+	bh.Logger.Printf("meteneRabiet returned: %v\n", int((bh.Year+5500)/4))
 	return int((bh.Year + 5500) / 4)
 }
 
-func (bh *BahireHasab) BealeMetk() string {
+func (bh *BahireHasab) bealeMetk() string {
 	var bealeMetk string
-	if 15 <= bh.Metk() && bh.Metk() <= 30 {
-		bealeMetk = "መስከረም " + strconv.Itoa(bh.Metk())
-	} else if 2 <= bh.Metk() && bh.Metk() <= 14 {
-		bealeMetk = "ጥቀምት " + strconv.Itoa(bh.Metk())
+	metk := bh.metk() % 30
+	if 15 <= metk && metk <= 30 {
+		bealeMetk = "መስከረም " + strconv.Itoa(metk)
+	} else if 2 <= metk && metk <= 14 {
+		bealeMetk = "ጥቅምት " + strconv.Itoa(metk)
 	}
+	bh.Logger.Printf("bealeMetk returned: %v\n", bealeMetk)
 	return bealeMetk
 }
 func (bh *BahireHasab) EletKen(e string) string {
+	bh.Logger.Printf("entering EletKen with: %v\n", e)
 	elet := strings.Split(e, " ")
+	bh.Logger.Printf("elet: %v\n", elet)
 	atsfeWer := (slices.Index(WERAT, elet[0]) + 1) * 2
-	tnteYon := (bh.MeteneRabiet()+bh.Year+5500)%7 - 1
+	bh.Logger.Printf("EletKen atsfewer: %v\n", atsfeWer)
+	tnteYon := (bh.meteneRabiet()+bh.Year+5500)%7 - 1
 	kenStr := elet[len(elet)-1]
 	ken, err := strconv.Atoi(kenStr)
 	if err != nil {
-		panic(err)
+		bh.Logger.Printf("error in making: %v msg %v\n", ken, err)
 	}
 	return ELETAT[(ken+tnteYon+atsfeWer)%7]
 }
 func (bh *BahireHasab) NewYear() string {
 	ameteAlem := bh.Year + 5500
-	a := (ameteAlem + bh.MeteneRabiet() + 2) % 7
+	a := (ameteAlem + bh.meteneRabiet() + 2) % 7
 	return ELETAT[a]
 
 }
 
 func (bh *BahireHasab) MebajaHamer() int {
-	_mebajaHamer := bh.Metk() + ELET_TEWSAK[bh.EletKen(bh.BealeMetk())]
+	eletKen := bh.EletKen(bh.bealeMetk())
+	_mebajaHamer := bh.metk() + ELET_TEWSAK[eletKen]
+	bh.Logger.Printf("getting eletken: %v\n", eletKen)
+	bh.Logger.Printf("getting elet_tewsak as : %v\n", ELET_TEWSAK[bh.EletKen(bh.bealeMetk())])
+	bh.Logger.Printf("mebajaHamer returned: %v\n", _mebajaHamer)
 	return _mebajaHamer
 }
 
 func (bh *BahireHasab) Neneweh() string {
-	_bealeMetk := bh.BealeMetk()
+	_bealeMetk := bh.bealeMetk()
 	_l := strings.Split(_bealeMetk, " ")
 	_mebajaHamer := bh.MebajaHamer()
 	var _wer string
 	if _mebajaHamer > 30 {
 		_wer = "የካቲት"
 		_mebajaHamer %= 30
-	} else if bh.Metk() == 30 || bh.Metk() == 0 {
+	} else if bh.metk() == 30 || bh.metk() == 0 {
 		_wer = "የካቲት"
 	} else if _l[0] == "መስከረም" {
 		_wer = "ጥር"
